@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101817">
+  <meta name="theme-color" content="#4c843b">
   <title>Clash of Empires</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,59 +11,164 @@
   <main id="onboarding" class="onboarding-shell">
     <section class="welcome-card">
       <div class="crest">⚔</div>
-      <p class="eyebrow">A living world. Your empire.</p>
+      <p class="eyebrow">Build your world. Lead your empire.</p>
       <h1>Clash of <span>Empires</span></h1>
-      <p class="intro">Build your village, gather your forces, and make your mark.</p>
+      <p class="intro">Create your ruler, choose a banner, and begin building.</p>
+
       <form id="account-form">
-        <label>Username<input id="username" name="username" minlength="3" maxlength="18" autocomplete="username" required placeholder="Choose a username"></label>
-        <label>Password<input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required placeholder="At least 8 characters"></label>
-        <label>Your city or town<input id="location" name="location" required placeholder="Example: Boston, Massachusetts"></label>
-        <label>Empire flag<select id="flag" name="flag"><option value="🏴">🏴 Black Banner</option><option value="🛡️">🛡️ Iron Shield</option><option value="🦅">🦅 Golden Eagle</option><option value="🐉">🐉 Crimson Dragon</option><option value="🌙">🌙 Silver Moon</option><option value="🌿">🌿 Emerald Leaf</option></select></label>
-        <button class="primary-button" type="submit">Create my empire <span>→</span></button>
+        <label>
+          Username
+          <input id="username" name="username" minlength="3" maxlength="18"
+            autocomplete="username" required placeholder="Choose a username">
+        </label>
+        <label>
+          Password
+          <input id="password" name="password" type="password" minlength="8"
+            autocomplete="new-password" required placeholder="At least 8 characters">
+        </label>
+        <label>
+          Your city or town
+          <input id="location" name="location" required
+            placeholder="Example: Boston, Massachusetts">
+        </label>
+        <label>
+          Empire flag
+          <select id="flag" name="flag">
+            <option value="🏴">🏴 Black Banner</option>
+            <option value="🛡️">🛡️ Iron Shield</option>
+            <option value="🦅">🦅 Golden Eagle</option>
+            <option value="🐉">🐉 Crimson Dragon</option>
+            <option value="🌙">🌙 Silver Moon</option>
+            <option value="🌿">🌿 Emerald Leaf</option>
+          </select>
+        </label>
+        <button class="primary-button" type="submit">
+          Enter the kingdom <span>→</span>
+        </button>
       </form>
-      <p class="prototype-note">First playable prototype · online accounts are not connected yet</p>
+
+      <p class="prototype-note">Prototype account · do not use a real password</p>
     </section>
-    <div class="onboarding-art" aria-hidden="true"><div class="art-sun"></div><div class="art-mountain mountain-back"></div><div class="art-mountain mountain-front"></div><div class="art-castle">♜</div></div>
+
+    <div class="onboarding-art" aria-hidden="true">
+      <div class="art-sun"></div>
+      <div class="art-mountain mountain-back"></div>
+      <div class="art-mountain mountain-front"></div>
+      <div class="art-castle">♜</div>
+    </div>
   </main>
 
   <main id="game" class="game-shell" hidden>
-    <header class="topbar">
-      <div class="brand"><span class="brand-crest">⚔</span><div><strong>CLASH OF EMPIRES</strong><small id="empire-name">YOUR EMPIRE</small></div></div>
-      <div class="resources" aria-label="Empire resources">
-        <div class="resource"><i class="resource-gold">●</i><span>Gold</span><b id="gold">2,500</b><button data-collect="gold" aria-label="Collect gold">+</button></div>
-        <div class="resource"><i class="resource-elixir">●</i><span>Elixir</span><b id="elixir">1,800</b><button data-collect="elixir" aria-label="Collect elixir">+</button></div>
-        <div class="resource"><i class="resource-dark">●</i><span>Dark</span><b id="dark">120</b></div>
-        <div class="resource gems"><i>◆</i><span>Gems</span><b id="gems">25</b></div>
+    <canvas id="village-canvas"
+      aria-label="Your isometric empire. Select an empty tile to place a building."></canvas>
+    <div class="world-vignette" aria-hidden="true"></div>
+    <div id="weather-layer" class="weather-layer" aria-hidden="true"></div>
+
+    <header class="hud-top">
+      <div class="player-hud">
+        <div class="level-badge"><span>1</span><small>LVL</small></div>
+        <div class="player-details">
+          <strong id="player-name">Player</strong>
+          <small id="kingdom-location">Finding kingdom…</small>
+        </div>
+        <div class="trophy-score"><span>🏆</span><b>0</b></div>
       </div>
-      <button id="profile-button" class="profile-button" title="Your profile"><span id="player-flag">🏴</span><span id="player-name">Player</span><b>⌄</b></button>
+
+      <div class="resource-stack" aria-label="Empire resources">
+        <div class="resource-pill gold-pill">
+          <div class="meter"><span style="width:44%"></span></div>
+          <i>🪙</i><b id="gold">2,500</b>
+          <button data-collect="gold" aria-label="Collect gold">＋</button>
+        </div>
+        <div class="resource-pill elixir-pill">
+          <div class="meter"><span style="width:36%"></span></div>
+          <i>🧪</i><b id="elixir">1,800</b>
+          <button data-collect="elixir" aria-label="Collect elixir">＋</button>
+        </div>
+        <div class="resource-pill dark-pill">
+          <div class="meter"><span style="width:18%"></span></div>
+          <i>⚫</i><b id="dark">120</b>
+          <button data-collect="dark" aria-label="Collect dark elixir">＋</button>
+        </div>
+        <div class="resource-pill gem-pill">
+          <div class="meter"><span style="width:24%"></span></div>
+          <i>💎</i><b id="gems">25</b>
+          <button data-collect="gems" aria-label="Get gems">＋</button>
+        </div>
+      </div>
     </header>
-    <section class="game-layout">
-      <aside class="side-panel left-panel">
-        <div class="panel-heading"><span class="online-dot"></span><div><small>YOUR KINGDOM</small><h2 id="kingdom-location">Loading location…</h2></div></div>
-        <div class="weather-card"><div><span id="weather-icon">☁</span><div><strong id="weather-label">Finding weather</strong><small id="weather-temp">--°</small></div></div><small id="weather-detail">Local conditions · visual only</small></div>
-        <div class="panel-section"><p class="section-label">VILLAGE STATUS</p><div class="stat-row"><span>Town Hall</span><b>Level 1</b></div><div class="stat-row"><span>Builders</span><b>2 / 2</b></div><div class="stat-row"><span>Shield</span><b class="shield">Active</b></div></div>
-        <button id="campaign-button" class="side-action"><span>♜</span><div><b>Goblin Campaign</b><small>Explore the frontier</small></div><span class="chevron">›</span></button>
-        <button id="clan-button" class="side-action"><span>⚑</span><div><b>Clans</b><small>Find your people</small></div><span class="chevron">›</span></button>
-        <div class="panel-footer">Prototype village · Chapter 1</div>
-      </aside>
 
-      <section class="world-panel">
-        <div class="world-caption"><div><span class="live-pill">HOME VILLAGE</span><h2>The First Keep</h2></div><button id="build-button" class="build-button">＋ <span>Build</span></button></div>
-        <div class="world-stage"><canvas id="village-canvas" aria-label="Isometric village. Click a building to select it."></canvas><div id="weather-layer" class="weather-layer" aria-hidden="true"></div><div class="world-hint" id="world-hint">Select a building to see its details</div></div>
-        <div class="world-toolbar"><button class="tool-button active" data-tool="select">⌖ <span>Select</span></button><button class="tool-button" data-tool="move">✥ <span>Move</span></button><button class="tool-button" data-tool="shop">＋ <span>Build</span></button><div class="toolbar-spacer"></div><button class="tool-button" id="zoom-out">−</button><span id="zoom-label">100%</span><button class="tool-button" id="zoom-in">＋</button></div>
-      </section>
+    <aside class="right-rail">
+      <button id="settings-button" class="round-control" title="Settings">
+        <span>⚙</span>
+      </button>
+      <button id="friends-button" class="round-control" title="Friends">
+        <span>♟</span><i class="notification-dot"></i>
+      </button>
+      <button id="clan-button" class="round-control" title="Clan">
+        <span>⚑</span>
+      </button>
+    </aside>
 
-      <aside class="side-panel right-panel">
-        <div class="player-card"><div class="player-avatar" id="avatar-flag">🏴</div><div><small>EMPIRE BUILDER</small><h2 id="card-player-name">Player</h2><span class="level-tag">Level 1 · New ruler</span></div></div>
-        <div class="panel-section selected-card"><p class="section-label">SELECTED BUILDING</p><div class="building-title"><span id="building-icon">🏰</span><div><strong id="building-name">Town Hall</strong><small id="building-level">Level 1 · Empire center</small></div></div><p id="building-description" class="building-description">Your empire begins here. Protect your Town Hall and grow your kingdom.</p><button id="upgrade-button" class="upgrade-button">Upgrade <span>500 gold</span></button></div>
-        <div class="panel-section army-section"><div class="army-heading"><p class="section-label">ARMY CAMP</p><span>0 / 20</span></div><div class="empty-army"><span>⚔</span><div><b>Your army is waiting</b><small>Build a Barracks to recruit troops.</small></div></div><button class="train-button" disabled>Train troops</button></div>
-        <div class="panel-section"><p class="section-label">QUICK ACTIONS</p><div class="quick-actions"><button id="friends-button">♧ <span>Friends</span></button><button id="settings-button">⚙ <span>Settings</span></button></div></div>
-        <div class="panel-footer">Weather changes the scenery, never battle strength.</div>
-      </aside>
+    <aside class="left-rail">
+      <button id="campaign-button" class="square-control" title="Goblin campaign">
+        🏆
+      </button>
+      <button id="profile-button" class="home-card">
+        <span class="home-avatar" id="player-flag">🏴</span>
+        <strong>MY EMPIRE</strong>
+        <small>Town Hall <b>1</b></small>
+      </button>
+    </aside>
+
+    <section class="build-panel" id="build-panel" hidden>
+      <div class="build-panel-head">
+        <div><small>EMPIRE BUILDER</small><h2>Choose a building</h2></div>
+        <button id="close-build" aria-label="Close building menu">×</button>
+      </div>
+      <div class="build-categories">
+        <button class="active" data-category="all">All</button>
+        <button data-category="resource">Resources</button>
+        <button data-category="defense">Defenses</button>
+        <button data-category="army">Army</button>
+      </div>
+      <div class="building-list" id="building-list"></div>
+      <p class="build-tip">Choose a building, then tap an empty grass tile to place it.</p>
     </section>
-    <nav class="bottom-nav"><button class="nav-item selected"><span>⌂</span>Village</button><button class="nav-item" id="nav-army"><span>⚔</span>Army</button><button class="nav-item" id="nav-clan"><span>⚑</span>Clan</button><button class="nav-item" id="nav-social"><span>♧</span>Social</button></nav>
+
+    <section class="selected-building" id="selected-building" hidden>
+      <button class="close-selected" id="close-selected">×</button>
+      <span id="building-icon">🏰</span>
+      <div>
+        <small>YOUR BUILDING</small>
+        <strong id="building-name">Town Hall</strong>
+        <p id="building-description"></p>
+      </div>
+      <button id="upgrade-button" class="upgrade-button">
+        Upgrade <b>500 🪙</b>
+      </button>
+    </section>
+
+    <nav class="bottom-dock">
+      <button id="build-button" class="dock-button">
+        <span>🏗️</span><b>BUILD</b>
+      </button>
+      <button id="army-button" class="dock-button">
+        <span>⚔️</span><b>ARMY</b>
+      </button>
+      <button id="attack-button" class="attack-button">
+        <span>🗺️</span><b>ATTACK</b>
+      </button>
+      <button id="weather-button" class="dock-button weather-button">
+        <span id="weather-icon">☀️</span>
+        <b id="weather-label">WEATHER</b>
+        <small id="weather-temp">--°</small>
+      </button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script type="module" src="game.js"></script>
 </body>
 </html>
