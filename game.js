@@ -22,11 +22,8 @@ function startGame(profile) {
   game.hidden = false;
 
   document.querySelector('#player-name').textContent = profile.username;
-  document.querySelector('#card-player-name').textContent = profile.username;
-  document.querySelector('#empire-name').textContent =
-    `${profile.username.toUpperCase()}'S EMPIRE`;
   document.querySelector('#player-flag').textContent = profile.flag;
-  document.querySelector('#avatar-flag').textContent = profile.flag;
+  document.querySelector('#kingdom-location').textContent = profile.location;
 
   initVillage();
   loadLocalWeather(profile.location);
@@ -40,26 +37,26 @@ document.querySelectorAll('[data-collect]').forEach((button) => {
   });
 });
 
-document.querySelector('#campaign-button').addEventListener('click', openGoblinCampaign);
-document.querySelector('#clan-button').addEventListener('click', openClan);
-document.querySelector('#nav-clan').addEventListener('click', openClan);
+document
+  .querySelector('#campaign-button')
+  .addEventListener('click', openGoblinCampaign);
+
+document
+  .querySelector('#clan-button')
+  .addEventListener('click', openClan);
 
 document.querySelector('#friends-button').addEventListener('click', () => {
   window.showToast('Friend search will arrive with online accounts.');
-});
-
-document.querySelector('#profile-button').addEventListener('click', () => {
-  window.showToast('Profile and account settings are planned.');
 });
 
 document.querySelector('#settings-button').addEventListener('click', () => {
   window.showToast('Settings will be added as the game grows.');
 });
 
-document.querySelector('#nav-army').addEventListener('click', () => {
-  window.showToast('Your army will be available after building Barracks.');
+document.querySelector('#profile-button').addEventListener('click', () => {
+  window.showToast('Your empire profile is coming soon.');
 });
 
-document.querySelector('#nav-social').addEventListener('click', () => {
-  window.showToast('Friends and clans will be connected to the online database.');
+document.querySelector('#weather-button').addEventListener('click', () => {
+  window.showToast('Local weather changes the scenery only.');
 });
