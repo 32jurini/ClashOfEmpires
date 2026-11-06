@@ -1,174 +1,122 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#4c843b">
-  <title>Clash of Empires</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#427c39">
+<title>Clash of Empires</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:#254a2f;color:#fff}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:active{transform:translateY(2px)}#world{position:absolute;inset:0;width:100%;height:100%;display:block}.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#1733214f 0%,transparent 22%,transparent 70%,#162b1f35 100%)}
+.hud{position:absolute;inset:0;pointer-events:none}.hud button,.hud .clickable{pointer-events:auto}.player{position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:9px;padding:7px 12px 7px 7px;min-width:236px;border:3px solid #573d21;border-radius:14px;background:linear-gradient(#fff1c6,#d6b268);color:#31220f;box-shadow:0 4px 0 #35291d,0 6px 14px #0006}.level{width:45px;height:45px;display:grid;place-content:center;text-align:center;border:3px solid #fff1bd;border-radius:12px;background:linear-gradient(#45c6f0,#1683bc);color:#fff;text-shadow:0 2px #245276;box-shadow:0 2px #433d2c}.level b{font-size:18px;line-height:17px}.level small{font-size:8px;font-weight:900}.player-info{flex:1;min-width:0}.player-info strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:1000;font-size:15px}.player-info small{display:block;margin-top:3px;color:#645334;font-size:10px;font-weight:700}.trophies{padding:4px 7px;border:1px solid #a58442;border-radius:8px;background:#fff9e8;font-size:12px;font-weight:900;white-space:nowrap}
+.resources{position:absolute;right:14px;top:14px;width:min(268px,30vw);display:grid;gap:6px}.res{height:38px;position:relative;display:flex;align-items:center;gap:8px;padding:3px 9px;border:2px solid #574122;border-radius:12px;background:linear-gradient(#fff2cd,#d6bd81);box-shadow:0 3px #34271a,0 5px 12px #0005;color:#fff}.res .bar{position:absolute;left:31px;right:31px;bottom:4px;height:5px;border:1px solid #524a38;border-radius:9px;background:#5c5947;overflow:hidden}.res .bar i{display:block;height:100%;background:linear-gradient(#c9ee85,#5d9c38)}.res.elixir .bar i{background:linear-gradient(#ffd0ff,#bc46cf)}.res.dark .bar i{background:linear-gradient(#c0b1ff,#5b47a9)}.res.gems .bar i{background:linear-gradient(#c1fff7,#36b9aa)}.res .ico{z-index:1;width:23px;text-align:center;font-size:21px;filter:drop-shadow(0 2px 1px #563f20)}.res strong{z-index:1;flex:1;text-align:right;font-size:14px;font-weight:1000;text-shadow:1px 2px 2px #231c12,-1px 0 #231c12}.res button{z-index:2;width:22px;height:22px;padding:0;border:2px solid #f5e7ae;border-radius:7px;background:linear-gradient(#9edc62,#4d9b38);font-size:15px;font-weight:1000;line-height:15px;text-shadow:0 1px #2e5e25;box-shadow:0 2px #315021}
+.rail{position:absolute;right:14px;top:50%;display:grid;gap:10px;transform:translateY(-50%)}.control{position:relative;width:54px;height:54px;border:3px solid #59452b;border-radius:14px;background:linear-gradient(#fff8de,#d8c28e);color:#493620;font-size:25px;box-shadow:0 4px #34291c,0 5px 12px #0005}.control .dot{position:absolute;right:3px;top:3px;width:10px;height:10px;border:1px solid white;border-radius:50%;background:#ec493e}.left-rail{position:absolute;left:14px;bottom:91px;display:grid;gap:9px}.side-btn{width:57px;height:56px;border:3px solid #62451f;border-radius:14px;background:linear-gradient(#ffe28e,#e58c32);color:#492d13;font-size:24px;box-shadow:0 4px #36291d,0 5px 10px #0006}.home-badge{width:106px;padding:8px 5px;border:3px solid #59452b;border-radius:14px;background:linear-gradient(#fff8de,#d8c28e);color:#332515;text-align:center;box-shadow:0 4px #34291c}.home-badge .flag{display:block;font-size:25px}.home-badge b{display:block;font-size:10px;font-weight:1000}.home-badge small{display:block;margin-top:3px;font-size:9px}
+.dock{position:absolute;left:50%;bottom:13px;display:flex;align-items:flex-end;gap:9px;transform:translateX(-50%)}.dockbtn{min-width:77px;height:66px;display:grid;place-content:center;justify-items:center;gap:2px;padding:5px 9px;border:3px solid #59452b;border-radius:13px;background:linear-gradient(#fff6df,#d9c38f);color:#3b2a17;box-shadow:0 4px #34291c,0 6px 12px #0005}.dockbtn span{font-size:25px;line-height:27px}.dockbtn b{font-size:9px;font-weight:1000}.dockbtn.main{min-width:100px;height:76px;background:linear-gradient(#ffda68,#e88a27);border-color:#754819;color:#43240d;transform:translateY(-4px)}.weather small{position:absolute;right:5px;top:4px;color:#365b70;font-size:8px;font-weight:900}
+.panel{position:absolute;z-index:5;left:50%;top:50%;width:min(500px,calc(100vw - 26px));max-height:min(76vh,650px);overflow:auto;transform:translate(-50%,-50%);padding:17px;border:4px solid #654720;border-radius:18px;background:linear-gradient(150deg,#fff4d6,#d7bd7c);color:#352718;box-shadow:0 7px #34271a,0 25px 60px #0009}.panel h2{margin:0;font-family:Georgia,serif;font-size:23px;text-shadow:0 1px #fff}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.close{width:32px;height:32px;border:2px solid #644921;border-radius:9px;background:linear-gradient(#fff3c9,#dbbb70);color:#3b2914;font-size:23px;font-weight:900}.tabs{display:flex;gap:6px;margin-bottom:10px;padding-top:10px;border-top:1px solid #b69a5f}.tabs button{padding:7px 10px;border:1px solid #997b46;border-radius:8px;background:#fff5d7;color:#46351d;font-size:11px;font-weight:900}.tabs button.active{background:#4e913c;color:#fff}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-item{min-height:64px;display:flex;align-items:center;gap:9px;padding:7px;border:2px solid #b39962;border-radius:10px;background:linear-gradient(#fff9e9,#eee0b8);color:#302414;text-align:left}.shop-item:hover{border-color:#5b8f3d;background:#fffdf3}.shop-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(145deg,#d4e8a0,#8aad56);font-size:24px}.shop-item strong,.shop-item small{display:block}.shop-item strong{font-size:11px;font-weight:1000}.shop-item small{margin-top:4px;color:#79591f;font-size:10px;font-weight:900}.tip{margin:11px 0 0;color:#5c4a2c;font-size:11px;font-weight:700}.action{padding:9px 13px;border:2px solid #674716;border-radius:9px;background:linear-gradient(#ffe27c,#e7a12f);color:#3c2710;font-weight:1000;box-shadow:0 3px #755022}.detail{position:absolute;z-index:4;right:83px;bottom:91px;width:min(330px,calc(100vw - 110px));padding:12px;display:flex;align-items:center;gap:9px;border:3px solid #634823;border-radius:14px;background:linear-gradient(#fff2ce,#dcc48b);color:#342515;box-shadow:0 4px #34291c,0 8px 20px #0006}.detail .bigico{font-size:33px}.detail-copy{flex:1}.detail-copy small{display:block;color:#76603a;font-size:8px;font-weight:1000;letter-spacing:.12em}.detail-copy strong{display:block;margin:2px 0;font-size:14px;font-weight:1000}.detail-copy p{margin:0;color:#665536;font-size:9px}.detail .action{font-size:10px;white-space:nowrap}.toast{position:absolute;z-index:8;bottom:94px;left:50%;padding:10px 15px;border:2px solid #563e21;border-radius:10px;background:#fff4d6;color:#332414;font-size:12px;font-weight:900;box-shadow:0 4px #33271b;opacity:0;transform:translate(-50%,12px);transition:.2s;pointer-events:none;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}.weather-layer{position:absolute;z-index:2;inset:0;overflow:hidden;pointer-events:none}.particle{position:absolute;top:-20px;color:#f7ffff;font-size:15px;opacity:.8;animation:fall linear infinite}.rain{width:2px;height:16px;background:#d8f1ff;animation:rain linear infinite}@keyframes fall{to{transform:translateY(110vh) rotate(340deg)}}@keyframes rain{to{transform:translateY(110vh)}}
+.signup-cover{position:absolute;z-index:10;inset:0;display:grid;place-items:center;padding:18px;background:#0b201b92;backdrop-filter:blur(4px)}.signup{width:min(390px,100%);padding:22px;border:3px solid #d2ac5a;border-radius:18px;background:linear-gradient(150deg,#344f34,#1b3025);box-shadow:0 8px #111b14,0 25px 60px #0008}.signup h1{margin:0;color:#ffe08a;font-family:Georgia,serif;font-size:32px;text-align:center;text-shadow:0 3px #49341b}.signup>p{text-align:center;color:#e6e1c7;font-size:12px}.signup label{display:block;margin:10px 0;color:#f4edd5;font-size:11px;font-weight:800}.signup input,.signup select{display:block;width:100%;margin-top:5px;padding:11px;border:2px solid #ae9259;border-radius:8px;background:#fff8e5;color:#302414}.signup .action{width:100%;margin-top:6px;padding:12px}.warning{font-size:9px!important;color:#c8d3be!important}
+@media(max-width:700px){.player{left:7px;top:7px;min-width:0;width:44%;gap:5px;padding:5px}.level{width:36px;height:36px}.level b{font-size:15px}.player-info strong{font-size:11px}.player-info small{font-size:8px}.trophies{padding:3px;font-size:9px}.resources{right:7px;top:7px;width:53%;gap:4px}.res{height:28px;gap:4px;padding:2px 5px}.res .ico{width:17px;font-size:15px}.res strong{font-size:10px}.res button{width:17px;height:17px;font-size:11px;line-height:11px}.rail{right:6px;gap:6px}.control{width:42px;height:42px;border-radius:10px;font-size:20px}.left-rail{left:6px;bottom:79px;gap:6px}.side-btn{width:42px;height:42px;font-size:19px}.home-badge{width:77px;padding:5px;font-size:8px}.home-badge .flag{font-size:19px}.dock{bottom:7px;gap:4px}.dockbtn{min-width:55px;height:55px;padding:4px;border-radius:10px}.dockbtn span{font-size:19px;line-height:20px}.dockbtn b{font-size:7px}.dockbtn.main{min-width:72px;height:64px}.detail{right:7px;bottom:71px;width:min(330px,calc(100vw - 14px))}.toast{bottom:73px;max-width:90vw;white-space:normal;text-align:center}.panel{max-height:78vh;padding:12px}.shop-grid{gap:5px}.shop-item{min-height:56px}.shop-icon{width:34px;height:34px;font-size:20px}}
+</style>
 </head>
 <body>
-  <main id="onboarding" class="onboarding-shell">
-    <section class="welcome-card">
-      <div class="crest">⚔</div>
-      <p class="eyebrow">Build your world. Lead your empire.</p>
-      <h1>Clash of <span>Empires</span></h1>
-      <p class="intro">Create your ruler, choose a banner, and begin building.</p>
-
-      <form id="account-form">
-        <label>
-          Username
-          <input id="username" name="username" minlength="3" maxlength="18"
-            autocomplete="username" required placeholder="Choose a username">
-        </label>
-        <label>
-          Password
-          <input id="password" name="password" type="password" minlength="8"
-            autocomplete="new-password" required placeholder="At least 8 characters">
-        </label>
-        <label>
-          Your city or town
-          <input id="location" name="location" required
-            placeholder="Example: Boston, Massachusetts">
-        </label>
-        <label>
-          Empire flag
-          <select id="flag" name="flag">
-            <option value="🏴">🏴 Black Banner</option>
-            <option value="🛡️">🛡️ Iron Shield</option>
-            <option value="🦅">🦅 Golden Eagle</option>
-            <option value="🐉">🐉 Crimson Dragon</option>
-            <option value="🌙">🌙 Silver Moon</option>
-            <option value="🌿">🌿 Emerald Leaf</option>
-          </select>
-        </label>
-        <button class="primary-button" type="submit">
-          Enter the kingdom <span>→</span>
-        </button>
-      </form>
-
-      <p class="prototype-note">Prototype account · do not use a real password</p>
-    </section>
-
-    <div class="onboarding-art" aria-hidden="true">
-      <div class="art-sun"></div>
-      <div class="art-mountain mountain-back"></div>
-      <div class="art-mountain mountain-front"></div>
-      <div class="art-castle">♜</div>
-    </div>
-  </main>
-
-  <main id="game" class="game-shell" hidden>
-    <canvas id="village-canvas"
-      aria-label="Your isometric empire. Select an empty tile to place a building."></canvas>
-    <div class="world-vignette" aria-hidden="true"></div>
-    <div id="weather-layer" class="weather-layer" aria-hidden="true"></div>
-
-    <header class="hud-top">
-      <div class="player-hud">
-        <div class="level-badge"><span>1</span><small>LVL</small></div>
-        <div class="player-details">
-          <strong id="player-name">Player</strong>
-          <small id="kingdom-location">Finding kingdom…</small>
-        </div>
-        <div class="trophy-score"><span>🏆</span><b>0</b></div>
-      </div>
-
-      <div class="resource-stack" aria-label="Empire resources">
-        <div class="resource-pill gold-pill">
-          <div class="meter"><span style="width:44%"></span></div>
-          <i>🪙</i><b id="gold">2,500</b>
-          <button data-collect="gold" aria-label="Collect gold">＋</button>
-        </div>
-        <div class="resource-pill elixir-pill">
-          <div class="meter"><span style="width:36%"></span></div>
-          <i>🧪</i><b id="elixir">1,800</b>
-          <button data-collect="elixir" aria-label="Collect elixir">＋</button>
-        </div>
-        <div class="resource-pill dark-pill">
-          <div class="meter"><span style="width:18%"></span></div>
-          <i>⚫</i><b id="dark">120</b>
-          <button data-collect="dark" aria-label="Collect dark elixir">＋</button>
-        </div>
-        <div class="resource-pill gem-pill">
-          <div class="meter"><span style="width:24%"></span></div>
-          <i>💎</i><b id="gems">25</b>
-          <button data-collect="gems" aria-label="Get gems">＋</button>
-        </div>
-      </div>
-    </header>
-
-    <aside class="right-rail">
-      <button id="settings-button" class="round-control" title="Settings">
-        <span>⚙</span>
-      </button>
-      <button id="friends-button" class="round-control" title="Friends">
-        <span>♟</span><i class="notification-dot"></i>
-      </button>
-      <button id="clan-button" class="round-control" title="Clan">
-        <span>⚑</span>
-      </button>
-    </aside>
-
-    <aside class="left-rail">
-      <button id="campaign-button" class="square-control" title="Goblin campaign">
-        🏆
-      </button>
-      <button id="profile-button" class="home-card">
-        <span class="home-avatar" id="player-flag">🏴</span>
-        <strong>MY EMPIRE</strong>
-        <small>Town Hall <b>1</b></small>
-      </button>
-    </aside>
-
-    <section class="build-panel" id="build-panel" hidden>
-      <div class="build-panel-head">
-        <div><small>EMPIRE BUILDER</small><h2>Choose a building</h2></div>
-        <button id="close-build" aria-label="Close building menu">×</button>
-      </div>
-      <div class="build-categories">
-        <button class="active" data-category="all">All</button>
-        <button data-category="resource">Resources</button>
-        <button data-category="defense">Defenses</button>
-        <button data-category="army">Army</button>
-      </div>
-      <div class="building-list" id="building-list"></div>
-      <p class="build-tip">Choose a building, then tap an empty grass tile to place it.</p>
-    </section>
-
-    <section class="selected-building" id="selected-building" hidden>
-      <button class="close-selected" id="close-selected">×</button>
-      <span id="building-icon">🏰</span>
-      <div>
-        <small>YOUR BUILDING</small>
-        <strong id="building-name">Town Hall</strong>
-        <p id="building-description"></p>
-      </div>
-      <button id="upgrade-button" class="upgrade-button">
-        Upgrade <b>500 🪙</b>
-      </button>
-    </section>
-
-    <nav class="bottom-dock">
-      <button id="build-button" class="dock-button">
-        <span>🏗️</span><b>BUILD</b>
-      </button>
-      <button id="army-button" class="dock-button">
-        <span>⚔️</span><b>ARMY</b>
-      </button>
-      <button id="attack-button" class="attack-button">
-        <span>🗺️</span><b>ATTACK</b>
-      </button>
-      <button id="weather-button" class="dock-button weather-button">
-        <span id="weather-icon">☀️</span>
-        <b id="weather-label">WEATHER</b>
-        <small id="weather-temp">--°</small>
-      </button>
-    </nav>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  </main>
-
-  <script type="module" src="game.js"></script>
+<canvas id="world"></canvas><div class="shade"></div><div id="weather-layer" class="weather-layer"></div>
+<main class="hud" id="hud" hidden>
+  <div class="player">
+    <div class="level"><b>1</b><small>LEVEL</small></div>
+    <div class="player-info"><strong id="player-name">Ruler</strong><small id="location-label">Your Kingdom</small></div>
+    <div class="trophies">🏆 <span id="trophy-count">0</span></div>
+  </div>
+  <div class="resources">
+    <div class="res gold"><span class="bar"><i style="width:44%"></i></span><span class="ico">🪙</span><strong id="gold">2,500</strong><button data-gather="gold">＋</button></div>
+    <div class="res elixir"><span class="bar"><i style="width:37%"></i></span><span class="ico">🧪</span><strong id="elixir">1,800</strong><button data-gather="elixir">＋</button></div>
+    <div class="res dark"><span class="bar"><i style="width:18%"></i></span><span class="ico">⚫</span><strong id="dark">120</strong><button data-gather="dark">＋</button></div>
+    <div class="res gems"><span class="bar"><i style="width:24%"></i></span><span class="ico">💎</span><strong id="gems">25</strong><button data-gather="gems">＋</button></div>
+  </div>
+  <div class="rail"><button class="control" id="friends" title="Friends">♟<i class="dot"></i></button><button class="control" id="clan" title="Clan">⚑</button><button class="control" id="settings" title="Settings">⚙</button></div>
+  <div class="left-rail"><button class="side-btn" id="campaign" title="Goblin campaign">🏆</button><button class="home-badge" id="home"><span class="flag" id="flag-display">🏴</span><b>MY EMPIRE</b><small>Town Hall <strong>1</strong></small></button></div>
+  <div class="dock"><button class="dockbtn" id="build"><span>🏗️</span><b>BUILD</b></button><button class="dockbtn" id="army"><span>⚔️</span><b>ARMY</b></button><button class="dockbtn main" id="attack"><span>🗺️</span><b>ATTACK</b></button><button class="dockbtn weather" id="weather"><span id="weather-icon">☀️</span><b id="weather-name">WEATHER</b><small id="temp">--°</small></button></div>
+  <section class="detail" id="detail" hidden><span class="bigico" id="detail-icon">🏰</span><div class="detail-copy"><small>EMPIRE BUILDING</small><strong id="detail-name">Town Hall</strong><p id="detail-desc"></p></div><button class="action" id="upgrade">UPGRADE<br><span id="upgrade-cost">500 🪙</span></button></section>
+  <section class="panel" id="shop" hidden><div class="panel-head"><h2>Build your empire</h2><button class="close" data-close="shop">×</button></div><div class="tabs"><button class="active" data-tab="all">All</button><button data-tab="resource">Resources</button><button data-tab="defense">Defenses</button><button data-tab="army">Army</button></div><div class="shop-grid" id="shop-grid"></div><p class="tip">Pick a building, then tap an empty grass tile to place it.</p></section>
+  <section class="panel" id="army-panel" hidden><div class="panel-head"><h2>Army camp</h2><button class="close" data-close="army-panel">×</button></div><p id="army-count">Your army: 0 soldiers</p><p class="tip">Recruit soldiers instantly. Build a Barracks first.</p><button class="action" id="train">TRAIN SOLDIER · 100 ELIXIR</button></section>
+  <section class="panel" id="battle-panel" hidden><div class="panel-head"><h2>Goblin frontier</h2><button class="close" data-close="battle-panel">×</button></div><p>A goblin outpost is waiting beyond the hills.</p><p id="battle-status" class="tip">Bring at least one soldier to raid.</p><button class="action" id="launch-raid">LAUNCH RAID</button></section>
+  <section class="panel" id="result-panel" hidden><div class="panel-head"><h2>Raid report</h2><button class="close" data-close="result-panel">×</button></div><p id="raid-result"></p><button class="action" data-close="result-panel">RETURN TO VILLAGE</button></section>
+  <div class="toast" id="toast"></div>
+</main>
+<div class="signup-cover" id="signup-cover"><form class="signup" id="signup"><h1>Clash of Empires</h1><p>Build a kingdom that stands the test of time.</p><label>Username<input id="username" minlength="3" maxlength="18" required placeholder="Your ruler name"></label><label>Password<input id="password" type="password" minlength="8" required placeholder="8 or more characters"></label><label>Your city or town<input id="city" required placeholder="Boston, Massachusetts"></label><label>Choose your empire banner<select id="banner"><option>🏴 Black Banner</option><option>🛡️ Iron Shield</option><option>🦅 Golden Eagle</option><option>🐉 Crimson Dragon</option><option>🌙 Silver Moon</option><option>🌿 Emerald Leaf</option></select></label><button class="action" type="submit">ENTER YOUR EMPIRE</button><p class="warning">This playable build saves your village in this browser only. Account passwords and online multiplayer are not connected yet. Use a made-up password.</p></form></div>
+<script>
+(() => {
+  const canvas=document.querySelector('#world'),ctx=canvas.getContext('2d'),GRID=20;
+  const catalog=[
+    {id:'hall',name:'Town Hall',kind:'hall',icon:'🏰',category:'special',cost:0,size:2,desc:'The heart of your empire. Keep it safe.'},
+    {id:'mine',name:'Gold Mine',kind:'mine',icon:'⛏️',category:'resource',cost:180,size:1,desc:'Produces gold for new buildings and upgrades.'},
+    {id:'pump',name:'Elixir Pump',kind:'pump',icon:'🧪',category:'resource',cost:180,size:1,desc:'Collects elixir for your growing army.'},
+    {id:'store',name:'Gold Store',kind:'store',icon:'🪙',category:'resource',cost:250,size:1,desc:'Keeps the gold your empire has collected.'},
+    {id:'barracks',name:'Barracks',kind:'barracks',icon:'⚔️',category:'army',cost:300,size:2,desc:'Recruit soldiers instantly for your army.'},
+    {id:'camp',name:'Army Camp',kind:'camp',icon:'⛺',category:'army',cost:240,size:2,desc:'Gives your troops a place to gather.'},
+    {id:'cannon',name:'Cannon',kind:'cannon',icon:'💣',category:'defense',cost:350,size:1,desc:'A sturdy defense to protect your village.'},
+    {id:'tower',name:'Archer Tower',kind:'tower',icon:'🏹',category:'defense',cost:420,size:1,desc:'A tall lookout that watches over your walls.'},
+    {id:'wall',name:'Stone Wall',kind:'wall',icon:'🧱',category:'defense',cost:45,size:1,desc:'A strong stone section for your defenses.'}
+  ];
+  const initial=[
+    ['hall',9,9],['mine',5,7],['mine',14,7],['pump',9,6],['store',5,11],['barracks',13,11],['camp',8,14],['cannon',4,13],['tower',15,13],['tower',7,5],['cannon',12,5],
+    ['wall',8,8],['wall',9,8],['wall',10,8],['wall',11,8],['wall',8,9],['wall',11,9],['wall',8,10],['wall',11,10],['wall',8,11],['wall',9,11],['wall',10,11],['wall',11,11]
+  ];
+  let buildings=[], gold=2500, elixir=1800, dark=120, gems=25, trophies=0, soldiers=0, selected=null, pending=null, moving=null, zoom=1, tw=55, th=28,cx=0,cy=0,player={name:'Ruler',city:'Your Kingdom',flag:'🏴'};
+  let weatherCode=-1;
+  function save(){localStorage.setItem('coe-world',JSON.stringify({buildings,gold,elixir,dark,gems,trophies,soldiers}));}
+  function restore(){try{const d=JSON.parse(localStorage.getItem('coe-world')||'null');if(d){buildings=d.buildings||[];gold=d.gold??gold;elixir=d.elixir??elixir;dark=d.dark??dark;gems=d.gems??gems;trophies=d.trophies??0;soldiers=d.soldiers??0;}else buildings=initial.map(([id,x,y])=>({...catalog.find(b=>b.id===id),x,y,level:1}));}catch{buildings=initial.map(([id,x,y])=>({...catalog.find(b=>b.id===id),x,y,level:1));}}
+  function resize(){const d=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(d,0,0,d,0,0);tw=Math.min(104,Math.max(35,Math.min(innerWidth/20.5,innerHeight/10.5)))*zoom;th=tw*.51;cx=innerWidth/2;cy=innerHeight/2-th*1.2;draw();}
+  function p(x,y,lift=0){return{x:cx+(x-y)*tw/2,y:cy+(x+y-GRID)*th/2-lift};}
+  function poly(points,fill,stroke='#37502c',line=1){ctx.beginPath();points.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=line;ctx.stroke();}}
+  function tile(x,y,color){const q=p(x+.5,y+.5);poly([{x:q.x,y:q.y-th/2},{x:q.x+tw/2,y:q.y},{x:q.x,y:q.y+th/2},{x:q.x-tw/2,y:q.y}],color,'#d2ec8a27',.8);}
+  function drawGround(){const bg=ctx.createLinearGradient(0,0,0,innerHeight);bg.addColorStop(0,'#7dbd56');bg.addColorStop(.55,'#609943');bg.addColorStop(1,'#397342');ctx.fillStyle=bg;ctx.fillRect(0,0,innerWidth,innerHeight);
+    const corners=[p(0,0),p(GRID,0),p(GRID,GRID),p(0,GRID)];ctx.save();ctx.shadowColor='#16291d88';ctx.shadowBlur=35;ctx.shadowOffsetY=18;poly(corners,'#a17a43','#534b2f',5);ctx.restore();
+    for(let sum=0;sum<GRID*2;sum++)for(let x=Math.max(0,sum-GRID+1);x<=Math.min(GRID-1,sum);x++){const y=sum-x;const n=(x*37+y*19+x*y*3)%7;tile(x,y,['#78b947','#83c250','#72ae41','#8cc957','#78b848','#6eaa40','#86bf4d'][n]);if((x*5+y*13)%11===0){const q=p(x+.5,y+.5);ctx.fillStyle='#ddeb8b88';ctx.beginPath();ctx.arc(q.x+(x%3-1)*7,q.y+(y%3-1)*3,1.5,0,7);ctx.fill();}}
+    // warm earthen island edge
+    for(let i=0;i<GRID;i++){for(const [x,y] of [[i,0],[i,GRID-1],[0,i],[GRID-1,i]]){const q=p(x+.5,y+.5);if(y===GRID-1||x===GRID-1){ctx.fillStyle='#9f7842';ctx.beginPath();ctx.ellipse(q.x,q.y+th*.27,tw*.39,th*.16,0,0,7);ctx.fill();ctx.fillStyle='#a6c85d';ctx.beginPath();ctx.ellipse(q.x,q.y+th*.16,tw*.4,th*.12,0,0,7);ctx.fill();}}}
+    const trail=[[9,19],[9,18],[9,17],[10,16],[10,15],[10,14],[10,13],[10,12],[10,11],[10,10]];trail.forEach(([x,y],i)=>tile(x,y,i%2?'#bea366':'#c4aa70'));
+  }
+  function tree(x,y,variant=0){const q=p(x+.5,y+.5),s=tw*.36;ctx.fillStyle='#23492850';ctx.beginPath();ctx.ellipse(q.x+5,q.y+6,s*.9,s*.37,0,0,7);ctx.fill();ctx.fillStyle='#79532d';ctx.fillRect(q.x-s*.11,q.y-s*.65,s*.22,s*.74);const colors=variant%2?['#2f773f','#499548','#70b853']:['#24663a','#35834a','#62a94e'];for(let i=0;i<3;i++){const yy=q.y-s*(1.25+i*.38);ctx.fillStyle=colors[i];ctx.beginPath();ctx.moveTo(q.x,yy-s*.65);ctx.lineTo(q.x+s*(.86-i*.13),yy+s*.42);ctx.lineTo(q.x-s*(.86-i*.13),yy+s*.42);ctx.closePath();ctx.fill();ctx.strokeStyle='#27553188';ctx.stroke();}if(variant%4===0){ctx.fillStyle='#ffdf70';ctx.beginPath();ctx.arc(q.x+s*.28,q.y-s*.84,2.5,0,7);ctx.fill();}}
+  function decor(){const trees=[[0,2],[2,0],[4,1],[15,0],[18,2],[19,5],[19,15],[17,18],[14,19],[4,19],[1,16],[0,11],[2,7],[17,6],[3,4],[16,3],[1,4],[18,11],[4,16],[15,16]];trees.forEach(([x,y],i)=>tree(x,y,i));for(const [x,y]of[[3,8],[16,9],[4,12],[14,4],[5,5],[14,15],[2,13],[17,13]]){const q=p(x+.5,y+.5);for(let j=0;j<3;j++){ctx.fillStyle=['#fff0ab','#f78b72','#df72c4'][j%3];ctx.beginPath();ctx.arc(q.x+(j-1)*4,q.y-2,2.2,0,7);ctx.fill();}}}
+  function base(b){const s=b.size||1,a=p(b.x,b.y),bb=p(b.x+s,b.y),c=p(b.x+s,b.y+s),d=p(b.x,b.y+s),mid={x:(a.x+c.x)/2,y:(a.y+c.y)/2};ctx.fillStyle='#23432255';ctx.beginPath();ctx.ellipse(mid.x+4,mid.y+6,tw*s*.45,th*s*.4,0,0,7);ctx.fill();poly([a,bb,c,d],'#8c9861','#50613c',1.2);return mid;}
+  function building(b){const q=base(b),s=tw/58;if(b.kind==='wall'){poly([{x:q.x,y:q.y-12*s},{x:q.x+17*s,y:q.y-3*s},{x:q.x,y:q.y+6*s},{x:q.x-17*s,y:q.y-3*s}],'#b9c0bb','#35434a',1.3);poly([{x:q.x-17*s,y:q.y-3*s},{x:q.x,y:q.y+6*s},{x:q.x,y:q.y+16*s},{x:q.x-17*s,y:q.y+7*s}],'#68757b','#36464c');poly([{x:q.x,y:q.y+6*s},{x:q.x+17*s,y:q.y-3*s},{x:q.x+17*s,y:q.y+7*s},{x:q.x,y:q.y+16*s}],'#818d91','#36464c');return;}
+    const h=b.size===2?35*s:25*s;poly([{x:q.x-19*s,y:q.y-5*s},{x:q.x,y:q.y+6*s},{x:q.x+19*s,y:q.y-5*s},{x:q.x,y:q.y-16*s}],'#d2c18e','#695438',1.4);poly([{x:q.x-19*s,y:q.y-5*s},{x:q.x,y:q.y+6*s},{x:q.x,y:q.y+6*s+h},{x:q.x-19*s,y:q.y-5*s+h}],'#9a7143','#56432d');poly([{x:q.x,y:q.y+6*s},{x:q.x+19*s,y:q.y-5*s},{x:q.x+19*s,y:q.y-5*s+h},{x:q.x,y:q.y+6*s+h}],'#624d38','#493929');
+    if(b.kind==='hall'){poly([{x:q.x-23*s,y:q.y-12*s},{x:q.x,y:q.y-32*s},{x:q.x+23*s,y:q.y-12*s},{x:q.x,y:q.y+1*s}],'#d54f35','#613623',2);poly([{x:q.x-17*s,y:q.y-11*s},{x:q.x,y:q.y-22*s},{x:q.x,y:q.y+2*s},{x:q.x-17*s,y:q.y+5*s}],'#e8bf73','#63482c');poly([{x:q.x,y:q.y-22*s},{x:q.x+17*s,y:q.y-11*s},{x:q.x+17*s,y:q.y+5*s},{x:q.x,y:q.y+2*s}],'#b58148','#63482c');ctx.fillStyle='#71392a';ctx.fillRect(q.x-5*s,q.y-4*s,10*s,13*s);ctx.fillStyle='#ffdf82';ctx.fillRect(q.x-3*s,q.y-16*s,6*s,6*s);ctx.fillStyle='#f7df8c';ctx.fillRect(q.x+19*s,q.y-38*s,2.5*s,22*s);ctx.fillStyle='#e24436';ctx.beginPath();ctx.moveTo(q.x+21*s,q.y-37*s);ctx.lineTo(q.x+35*s,q.y-33*s);ctx.lineTo(q.x+21*s,q.y-28*s);ctx.fill();ctx.fillStyle='#d0a13f';ctx.beginPath();ctx.arc(q.x,q.y-25*s,3*s,0,7);ctx.fill();}
+    if(b.kind==='mine'){ctx.fillStyle='#774b2a';ctx.fillRect(q.x-12*s,q.y-32*s,24*s,27*s);poly([{x:q.x-16*s,y:q.y-31*s},{x:q.x,y:q.y-44*s},{x:q.x+16*s,y:q.y-31*s}],'#795037','#493423',1.3);ctx.fillStyle='#e2b94f';ctx.fillRect(q.x-3*s,q.y-35*s,6*s,12*s);ctx.strokeStyle='#543a24';ctx.lineWidth=3*s;ctx.beginPath();ctx.moveTo(q.x-20*s,q.y-29*s);ctx.lineTo(q.x+20*s,q.y-29*s);ctx.stroke();ctx.fillStyle='#f8d976';ctx.beginPath();ctx.arc(q.x+20*s,q.y-29*s,4*s,0,7);ctx.fill();}
+    if(b.kind==='pump'){ctx.fillStyle='#75428e';ctx.fillRect(q.x-14*s,q.y-31*s,28*s,25*s);ctx.fillStyle='#b850d0';ctx.beginPath();ctx.ellipse(q.x,q.y-31*s,14*s,8*s,0,0,7);ctx.fill();ctx.fillStyle='#f1abff';ctx.beginPath();ctx.ellipse(q.x-3*s,q.y-33*s,7*s,3*s,-.3,0,7);ctx.fill();ctx.fillStyle='#734083';ctx.fillRect(q.x-17*s,q.y-8*s,34*s,5*s);ctx.fillStyle='#f1d481';ctx.fillRect(q.x-2*s,q.y-43*s,4*s,13*s);}
+    if(b.kind==='store'){ctx.fillStyle='#9d5c2b';ctx.beginPath();ctx.ellipse(q.x,q.y-15*s,15*s,11*s,0,0,7);ctx.fill();ctx.fillStyle='#e7a832';ctx.beginPath();ctx.ellipse(q.x,q.y-22*s,14*s,9*s,0,0,7);ctx.fill();ctx.fillStyle='#ffe079';ctx.beginPath();ctx.ellipse(q.x,q.y-23*s,8*s,4*s,0,0,7);ctx.fill();ctx.fillStyle='#fff1a5';ctx.fillRect(q.x-12*s,q.y-17*s,24*s,2*s);}
+    if(b.kind==='barracks'){poly([{x:q.x-21*s,y:q.y-15*s},{x:q.x,y:q.y-34*s},{x:q.x+21*s,y:q.y-15*s},{x:q.x,y:q.y-3*s}],'#b24932','#583622',1.5);poly([{x:q.x-16*s,y:q.y-13*s},{x:q.x,y:q.y-2*s},{x:q.x,y:q.y+11*s},{x:q.x-16*s,y:q.y}],'#d3a46a');poly([{x:q.x,y:q.y-2*s},{x:q.x+16*s,y:q.y-13*s},{x:q.x+16*s,y:q.y},{x:q.x,y:q.y+11*s}],'#8c603a');ctx.fillStyle='#51382a';ctx.fillRect(q.x-5*s,q.y-11*s,10*s,18*s);ctx.fillStyle='#ffe396';ctx.fillRect(q.x-14*s,q.y-12*s,4*s,4*s);ctx.fillRect(q.x+10*s,q.y-12*s,4*s,4*s);}
+    if(b.kind==='camp'){poly([{x:q.x-26*s,y:q.y-4*s},{x:q.x,y:q.y-34*s},{x:q.x+26*s,y:q.y-4*s}],'#d0a84d','#614622',1.5);poly([{x:q.x-26*s,y:q.y-4*s},{x:q.x,y:q.y-34*s},{x:q.x,y:q.y+4*s}],'#e3c36d');poly([{x:q.x,y:q.y-34*s},{x:q.x+26*s,y:q.y-4*s},{x:q.x,y:q.y+4*s}],'#a46736');ctx.fillStyle='#f9a53c';ctx.beginPath();ctx.arc(q.x+27*s,q.y,5*s,0,7);ctx.fill();ctx.fillStyle='#fff09c';ctx.beginPath();ctx.arc(q.x+27*s,q.y-2*s,2*s,0,7);ctx.fill();}
+    if(b.kind==='cannon'){ctx.fillStyle='#384f52';ctx.beginPath();ctx.ellipse(q.x,q.y-9*s,16*s,9*s,0,0,7);ctx.fill();ctx.fillStyle='#99a9a1';ctx.beginPath();ctx.ellipse(q.x,q.y-17*s,12*s,8*s,-.3,0,7);ctx.fill();ctx.save();ctx.translate(q.x+8*s,q.y-21*s);ctx.rotate(-.5);ctx.fillStyle='#526164';ctx.fillRect(-4*s,-17*s,8*s,19*s);ctx.fillStyle='#bbc8ba';ctx.fillRect(-4*s,-17*s,8*s,3*s);ctx.restore();ctx.fillStyle='#273a3c';ctx.beginPath();ctx.arc(q.x-12*s,q.y-4*s,5*s,0,7);ctx.arc(q.x+12*s,q.y-4*s,5*s,0,7);ctx.fill();}
+    if(b.kind==='tower'){ctx.fillStyle='#81569c';ctx.fillRect(q.x-9*s,q.y-54*s,18*s,52*s);ctx.fillStyle='#bd91d0';ctx.fillRect(q.x-7*s,q.y-50*s,5*s,44*s);ctx.fillStyle='#4f3970';ctx.fillRect(q.x-17*s,q.y-59*s,34*s,8*s);ctx.fillStyle='#d2b1e4';ctx.fillRect(q.x-20*s,q.y-63*s,8*s,12*s);ctx.fillRect(q.x+12*s,q.y-63*s,8*s,12*s);ctx.fillStyle='#ffe68e';ctx.fillRect(q.x-3*s,q.y-43*s,6*s,9*s);}
+    if(b.level>1){ctx.fillStyle='#fff0a0';ctx.beginPath();ctx.arc(q.x+tw*.23,q.y-19*s,5*s,0,7);ctx.fill();}if(selected===b){ctx.strokeStyle='#fff3a2';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(q.x,q.y+3,tw*.43,th*.34,0,0,7);ctx.stroke();}}
+  function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);drawGround();decor();buildings.slice().sort((a,b)=>(a.x+a.y)-(b.x+b.y)).forEach(building);if(pending){ctx.fillStyle='#fff4bd';ctx.font='bold 16px Arial';ctx.textAlign='center';ctx.shadowColor='#17301d';ctx.shadowBlur=4;ctx.fillText(moving?'TAP A FREE TILE TO MOVE IT':'TAP AN EMPTY TILE TO PLACE',innerWidth/2,innerHeight-96);ctx.shadowBlur=0;}}
+  function gridAt(e){const dx=(e.clientX-cx)/(tw/2),dy=(e.clientY-cy)/(th/2)+GRID;return{x:Math.floor((dx+dy)/2),y:Math.floor((dy-dx)/2)}}
+  function inside(x,y,s=1){return x>=0&&y>=0&&x+s<=GRID&&y+s<=GRID;}
+  function free(x,y,s=1,ignore=null){return inside(x,y,s)&&!buildings.some(b=>b!==ignore&&x<b.x+(b.size||1)&&x+s>b.x&&y<b.y+(b.size||1)&&y+s>b.y);}
+  function hit(x,y){return buildings.slice().reverse().find(b=>x>=b.x&&x<b.x+(b.size||1)&&y>=b.y&&y<b.y+(b.size||1));}
+  function tell(msg){const t=document.querySelector('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t.timer);t.timer=setTimeout(()=>t.classList.remove('show'),2400);}
+  function panel(id){document.querySelectorAll('.panel').forEach(e=>e.hidden=true);document.querySelector('#detail').hidden=true;document.querySelector('#'+id).hidden=false;}
+  function renderResources(){for(const [id,val]of Object.entries({gold,elixir,dark,gems})) {const e=document.querySelector('#'+id);if(e)e.textContent=Number(val).toLocaleString();}document.querySelector('#trophy-count').textContent=trophies;document.querySelector('#army-count').textContent=`Your army: ${soldiers} ${soldiers===1?'soldier':'soldiers'}`;}
+  function showDetail(b){selected=b;document.querySelector('#detail').hidden=false;document.querySelector('#detail-icon').textContent=b.icon;document.querySelector('#detail-name').textContent=b.name+` · Lv ${b.level}`;document.querySelector('#detail-desc').textContent=b.desc;document.querySelector('#upgrade-cost').textContent=`${b.level*500} 🪙`;draw();}
+  function openShop(tab='all'){panel('shop');const list=document.querySelector('#shop-grid');list.replaceChildren();document.querySelectorAll('[data-tab]').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));catalog.filter(b=>b.cost>0&&(tab==='all'||b.category===tab)).forEach(b=>{const btn=document.createElement('button');btn.className='shop-item';btn.innerHTML=`<span class="shop-icon">${b.icon}</span><span><strong>${b.name}</strong><small>${b.cost} ${b.id==='pump'?'🧪':'🪙'}</small></span>`;btn.onclick=()=>{const currency=b.id==='pump'?'elixir':'gold';if((currency==='elixir'?elixir:gold)<b.cost)return tell('You need more resources.');pending=b;moving=null;document.querySelector('#shop').hidden=true;draw();tell(`Tap an empty tile to place ${b.name}.`);};list.append(btn);});}
+  function startGame(){restore();document.querySelector('#signup-cover').hidden=true;document.querySelector('#hud').hidden=false;document.querySelector('#player-name').textContent=player.name;document.querySelector('#location-label').textContent=player.city;document.querySelector('#flag-display').textContent=player.flag;renderResources();resize();weather(player.city);}
+  function placeAt(e){const g=gridAt(e);if(pending){const s=pending.size||1;if(!free(g.x,g.y,s,moving)){tell('That spot is occupied. Try an empty grass tile.');return;}if(moving){moving.x=g.x;moving.y=g.y;moving=null;pending=null;save();draw();tell('Building moved!');return;}const b={...pending,x:g.x,y:g.y,level:1};if(b.id==='pump')elixir-=b.cost;else gold-=b.cost;buildings.push(b);pending=null;save();renderResources();document.querySelector('#detail').hidden=true;draw();tell(`${b.name} placed in your empire!`);return;}const b=hit(g.x,g.y);if(b)showDetail(b);else{selected=null;document.querySelector('#detail').hidden=true;draw();}}
+  canvas.addEventListener('click',placeAt);addEventListener('resize',resize);
+  document.querySelector('#signup').addEventListener('submit',e=>{e.preventDefault();player={name:document.querySelector('#username').value.trim(),city:document.querySelector('#city').value.trim(),flag:document.querySelector('#banner').value.split(' ')[0]};document.querySelector('#password').value='';sessionStorage.setItem('coe-player',JSON.stringify(player));startGame();});
+  document.querySelector('#build').onclick=()=>openShop();document.querySelectorAll('[data-tab]').forEach(t=>t.onclick=()=>openShop(t.dataset.tab));document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>document.querySelector('#'+b.dataset.close).hidden=true);
+  document.querySelector('#upgrade').onclick=()=>{if(!selected)return;const cost=selected.level*500;if(gold<cost)return tell('You need more gold to upgrade.');gold-=cost;selected.level++;save();renderResources();showDetail(selected);tell(`${selected.name} upgraded!`);};
+  document.querySelector('#home').onclick=()=>{if(!selected)return tell('Your empire is shown here. Tap a building to select it.');moving=selected;pending=selected;document.querySelector('#detail').hidden=true;draw();tell('Tap an empty tile to move this building.');};
+  document.querySelector('#army').onclick=()=>panel('army-panel');document.querySelector('#train').onclick=()=>{if(!buildings.some(b=>b.kind==='barracks'))return tell('Build a Barracks first.');if(elixir<100)return tell('You need 100 elixir.');elixir-=100;soldiers++;save();renderResources();tell('A soldier joined your army!');};
+  document.querySelector('#attack').onclick=()=>{panel('battle-panel');document.querySelector('#battle-status').textContent=soldiers?`You have ${soldiers} soldiers ready.`:'Bring at least one soldier to raid.';};
+  document.querySelector('#launch-raid').onclick=()=>{if(!soldiers)return tell('Train at least one soldier first.');panel('result-panel');const stars=Math.min(3,Math.max(1,Math.floor(soldiers/2)+1));const reward=stars*220;gold+=reward;elixir+=stars*120;trophies+=stars*5;soldiers=0;save();renderResources();document.querySelector('#raid-result').textContent=`Victory! Your army earned ${stars} star${stars===1?'':'s'}, ${reward} gold, ${stars*120} elixir, and ${stars*5} trophies.`;};
+  document.querySelector('#campaign').onclick=()=>document.querySelector('#attack').click();document.querySelector('#friends').onclick=()=>tell('Friend search unlocks when online accounts are connected.');document.querySelector('#clan').onclick=()=>tell('Clan creation unlocks when online accounts are connected.');document.querySelector('#settings').onclick=()=>tell('Settings are coming soon.');document.querySelector('#weather').onclick=()=>tell('Local weather changes the scenery only.');
+  document.querySelectorAll('[data-gather]').forEach(b=>b.onclick=()=>{const k=b.dataset.gather;if(k==='gold'){gold+=250;tell('+250 gold collected!');}else if(k==='elixir'){elixir+=180;tell('+180 elixir collected!');}else return tell('This resource collector is coming later.');save();renderResources();});
+  function weather(city){fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`).then(r=>r.json()).then(g=>{const p=g.results?.[0];if(!p)throw Error();document.querySelector('#location-label').textContent=`${p.name}${p.admin1?', '+p.admin1:''}`;return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.latitude}&longitude=${p.longitude}&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto`);}).then(r=>r.json()).then(d=>{weatherCode=d.current.weather_code;const codes={0:['CLEAR','☀️'],1:['CLEAR','🌤️'],2:['CLOUDS','⛅'],3:['CLOUDY','☁️'],45:['FOG','🌫️'],51:['DRIZZLE','🌦️'],61:['RAIN','🌧️'],63:['RAIN','🌧️'],65:['RAIN','🌧️'],71:['SNOW','🌨️'],73:['SNOW','❄️'],75:['SNOW','❄️'],80:['SHOWERS','🌦️'],81:['RAIN','🌧️'],82:['STORM','⛈️'],95:['STORM','⛈️']};const [name,icon]=codes[weatherCode]||['WEATHER','☁️'];document.querySelector('#weather-name').textContent=name;document.querySelector('#weather-icon').textContent=icon;document.querySelector('#temp').textContent=Math.round(d.current.temperature_2m)+'°';weatherFx(weatherCode);}).catch(()=>{document.querySelector('#weather-name').textContent='WEATHER';});}
+  function weatherFx(code){const layer=document.querySelector('#weather-layer');layer.replaceChildren();if(code<70)return;const snow=code>=71&&code<=86;for(let i=0;i<36;i++){const e=document.createElement('i');e.className=snow?'particle':'particle rain';if(snow)e.textContent='❄';e.style.left=Math.random()*100+'%';e.style.animationDuration=3+Math.random()*5+'s';e.style.animationDelay=-Math.random()*7+'s';layer.append(e);}}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.panel').forEach(p=>p.hidden=true);pending=null;moving=null;draw();}});
+  try{const old=JSON.parse(sessionStorage.getItem('coe-player')||'null');if(old){player=old;startGame();}}catch{}
+  // Drawing helpers are declared below so the world is visible behind the sign-up card.
+  function animate(){draw();requestAnimationFrame(animate);}resize();requestAnimationFrame(animate);
+})();
+</script>
 </body>
 </html>
